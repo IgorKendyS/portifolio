@@ -19,6 +19,10 @@ import { motion } from "framer-motion";
 import { InteractiveTerminal } from "./components/InteractiveTerminal";
 import { CacheTester } from "./components/CacheTester";
 import { LiveLogs } from "./components/LiveLogs";
+import { CICDPipeline } from "./components/CICDPipeline";
+import { MetricsDashboard } from "./components/MetricsDashboard";
+import { ArchitectureDiagram } from "./components/ArchitectureDiagram";
+import { ApiPlayground } from "./components/ApiPlayground";
 
 export default function Home() {
   const scrollVariant = {
@@ -202,6 +206,72 @@ export default function Home() {
           <CacheTester />
         </motion.section>
 
+        {/* --- ARCHITECTURE DIAGRAM --- */}
+        <motion.section 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, margin: "-100px" }}
+          variants={scrollVariant}
+          id="arquitetura" 
+          className="scroll-mt-24"
+        >
+          <ArchitectureDiagram />
+        </motion.section>
+
+        {/* --- CI/CD PIPELINE --- */}
+        <motion.section 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, margin: "-100px" }}
+          variants={scrollVariant}
+          id="cicd" 
+          className="scroll-mt-24"
+        >
+          <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+             <span className="text-cyan-400 font-mono text-xl">06.</span> Pipeline de Automação (CI/CD)
+          </h2>
+          <p className="text-slate-400 mb-8 max-w-2xl text-lg">
+            Automatizar o processo de deploy reduz falhas operacionais e garante agilidade. Este é um simulador interativo de uma pipeline GitHub Actions implantando nossa aplicação num ambiente Kubernetes.
+          </p>
+          <CICDPipeline />
+        </motion.section>
+
+        {/* --- METRICS DASHBOARD --- */}
+        <motion.section 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, margin: "-100px" }}
+          variants={scrollVariant}
+          id="grafana" 
+          className="scroll-mt-24"
+        >
+          <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+             <span className="text-cyan-400 font-mono text-xl">07.</span> Telemetria & Observabilidade
+          </h2>
+          <p className="text-slate-400 mb-8 max-w-2xl text-lg">
+            Sistemas distribuídos exigem monitoramento contínuo para evitar gargalos em produção. Este simulador no formato Grafana monitora o uso de recursos dos pods na nossa infraestrutura simulada em tempo real.
+          </p>
+          <MetricsDashboard />
+        </motion.section>
+
+        {/* --- API PLAYGROUND --- */}
+        <motion.section 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, margin: "-100px" }}
+          variants={scrollVariant}
+          id="api-sandbox" 
+          className="scroll-mt-24"
+        >
+          <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+             <span className="text-cyan-400 font-mono text-xl">08.</span> Teste de API (Sandbox)
+          </h2>
+          <p className="text-slate-400 mb-8 max-w-2xl text-lg">
+            Um dos pilares de um Backend Engineer é projetar APIs seguras e autodescritivas. Este simulador interativo inspirado no Postman / Swagger permite testar envios de JSON para meus endpoints mockados, lidando com autenticações, status codes e latência de rede em tempo real.
+          </p>
+          <ApiPlayground />
+        </motion.section>
+
 
         {/* --- EXPERIÊNCIA (EXPERIENCE) --- */}
         <motion.section 
@@ -213,7 +283,7 @@ export default function Home() {
           className="scroll-mt-24"
         >
           <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-            <span className="text-cyan-400 font-mono text-xl">05.</span> Experiência Profissional
+            <span className="text-cyan-400 font-mono text-xl">09.</span> Experiência Profissional
           </h2>
           
           <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-cyan-600/50 before:to-transparent">
@@ -289,7 +359,7 @@ export default function Home() {
         >
           <div>
             <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-              <span className="text-cyan-400 font-mono text-xl">06.</span> Academia
+              <span className="text-cyan-400 font-mono text-xl">10.</span> Academia
             </h2>
             <div className="glass p-6 rounded-xl h-full transition-transform hover:-translate-y-2 duration-300">
               <div className="flex items-center gap-4 mb-4">
