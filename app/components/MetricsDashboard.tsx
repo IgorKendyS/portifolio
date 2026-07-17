@@ -98,41 +98,73 @@ export function MetricsDashboard() {
   };
 
   return (
-    <div className="w-full glass rounded-xl p-6 md:p-8 border border-slate-700/50 shadow-2xl relative overflow-hidden group">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 opacity-50"></div>
-      
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-white/5 mb-6 gap-4">
+    <div style={{
+      width: "100%",
+      background: "#111111",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: "12px",
+      padding: "32px",
+      overflow: "hidden",
+      position: "relative",
+    }}>
+      {/* Top accent bar */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, #E8FF47, #4ADE80, #7B9FFF)" }} />
+
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", paddingBottom: "24px", borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "32px", gap: "16px" }}>
         <div>
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <Activity className="text-cyan-400" size={24} /> 
+          <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "18px", letterSpacing: "-0.02em", display: "flex", alignItems: "center", gap: "8px" }}>
+            <Activity size={18} style={{ color: "#E8FF47" }} />
             Monitoramento de Cluster (Real-Time)
           </h3>
-          <p className="text-slate-400 text-sm mt-1">
-            Simulação de telemetria baseada em Prometheus / Grafana para 3 instâncias Kubernetes ativas.
+          <p style={{ color: "#8A8A8A", fontSize: "13px", marginTop: "4px" }}>
+            Simulação baseada em Prometheus / Grafana para 3 instâncias Kubernetes.
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-xs font-mono font-medium px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
-             <span className={`w-2 h-2 rounded-full ${isSimulating ? 'bg-emerald-400 animate-pulse' : 'bg-red-500'}`}></span>
-             {isSimulating ? "LIVE" : "PAUSED"}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "6px 12px",
+            background: "#1A1A1A",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "100px",
+            fontFamily: "var(--font-mono)",
+            fontSize: "11px",
+            color: isSimulating ? "#4ADE80" : "#FF4747",
+          }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: isSimulating ? "#4ADE80" : "#FF4747" }} />
+            {isSimulating ? "LIVE" : "PAUSED"}
           </div>
-          <button 
-             onClick={() => setIsSimulating(!isSimulating)}
-             className="text-xs font-semibold bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded border border-cyan-500/30 text-cyan-400 transition-colors shadow-[0_0_10px_rgba(34,211,238,0.1)]"
+          <button
+            onClick={() => setIsSimulating(!isSimulating)}
+            style={{
+              padding: "6px 14px",
+              background: "#1A1A1A",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "6px",
+              fontFamily: "var(--font-mono)",
+              fontSize: "12px",
+              color: "#F2F2F2",
+              cursor: "pointer",
+              transition: "background 150ms ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#222")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#1A1A1A")}
           >
-             {isSimulating ? "Pause" : "Resume"}
+            {isSimulating ? "Pause" : "Resume"}
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }} className="metrics-grid">
         {/* CPU Panel */}
-        <div className="bg-slate-900/50 border border-white/5 rounded-lg p-4 flex flex-col h-48 transition-colors hover:border-cyan-500/30">
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-2 text-slate-300 font-medium whitespace-nowrap">
-              <Cpu size={16} className="text-cyan-400" /> CPU Usage (Avg)
+        <div style={{ background: "#080808", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "8px", padding: "16px", display: "flex", flexDirection: "column", height: "192px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#8A8A8A", fontSize: "13px" }}>
+              <Cpu size={14} style={{ color: "#E8FF47" }} /> CPU Usage
             </div>
-            <span className={`font-mono font-bold ${currentCpu > 80 ? 'text-rose-400' : currentCpu > 60 ? 'text-yellow-400' : 'text-cyan-400'}`}>
+            <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700, color: currentCpu > 80 ? "#FF4747" : currentCpu > 60 ? "#E8FF47" : "#F2F2F2" }}>
               {currentCpu}%
             </span>
           </div>
@@ -140,39 +172,40 @@ export function MetricsDashboard() {
         </div>
 
         {/* Memory Panel */}
-        <div className="bg-slate-900/50 border border-white/5 rounded-lg p-4 flex flex-col h-48 transition-colors hover:border-purple-500/30">
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-2 text-slate-300 font-medium whitespace-nowrap">
-              <Database size={16} className="text-purple-400" /> Mem Allocation
+        <div style={{ background: "#080808", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "8px", padding: "16px", display: "flex", flexDirection: "column", height: "192px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#8A8A8A", fontSize: "13px" }}>
+              <Database size={14} style={{ color: "#A78BFA" }} /> Mem Alloc
             </div>
-            <span className="font-mono font-bold text-purple-400">
-              {currentMem}%
-            </span>
+            <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700, color: "#A78BFA" }}>{currentMem}%</span>
           </div>
           <AreaChart data={memData} color="purple" max={100} />
         </div>
 
         {/* Network Panel */}
-        <div className="bg-slate-900/50 border border-white/5 rounded-lg p-4 flex flex-col h-48 transition-colors hover:border-emerald-500/30">
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-2 text-slate-300 font-medium whitespace-nowrap">
-              <Server size={16} className="text-emerald-400" /> Requests / Sec
+        <div style={{ background: "#080808", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "8px", padding: "16px", display: "flex", flexDirection: "column", height: "192px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#8A8A8A", fontSize: "13px" }}>
+              <Server size={14} style={{ color: "#4ADE80" }} /> Req / Sec
             </div>
-            <span className="font-mono font-bold text-emerald-400">
-              {currentReq}
-            </span>
+            <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700, color: "#4ADE80" }}>{currentReq}</span>
           </div>
           <AreaChart data={reqData} color="emerald" max={400} />
         </div>
       </div>
-      
-      <div className="mt-6 flex flex-wrap gap-4 text-xs font-mono text-slate-500 border-t border-white/5 pt-4">
-        <span className="flex items-center gap-1 text-slate-400"><Box size={14}/> Nodes: 3/3 Online</span>
-        <span className="flex items-center gap-1 text-slate-400"><Activity size={14}/> Uptime: 99.98%</span>
-        <span className="text-emerald-500 font-semibold flex items-center gap-1">
-          ✓ Health Check: Ok (18ms)
-        </span>
+
+      <div style={{ marginTop: "24px", display: "flex", flexWrap: "wrap", gap: "20px", fontFamily: "var(--font-mono)", fontSize: "12px", color: "#555", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "20px" }}>
+        <span style={{ display: "flex", alignItems: "center", gap: "6px", color: "#8A8A8A" }}><Box size={12} /> Nodes: 3/3 Online</span>
+        <span style={{ display: "flex", alignItems: "center", gap: "6px", color: "#8A8A8A" }}><Activity size={12} /> Uptime: 99.98%</span>
+        <span style={{ display: "flex", alignItems: "center", gap: "6px", color: "#4ADE80" }}>&#x2713; Health Check: Ok (18ms)</span>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .metrics-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   );
 }
+

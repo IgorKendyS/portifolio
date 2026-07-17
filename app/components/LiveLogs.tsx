@@ -65,55 +65,92 @@ export function LiveLogs() {
 
   const getColor = (level: string) => {
     switch (level) {
-      case "INFO": return "text-cyan-400";
-      case "WARN": return "text-yellow-400";
-      case "ERROR": return "text-red-400";
-      case "SUCCESS": return "text-emerald-400";
-      default: return "text-slate-400";
+      case "INFO": return "#7B9FFF";
+      case "WARN": return "#E8FF47";
+      case "ERROR": return "#FF4747";
+      case "SUCCESS": return "#4ADE80";
+      default: return "#8A8A8A";
     }
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end pointer-events-none">
+    <div style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 50, display: "flex", flexDirection: "column", alignItems: "flex-end", pointerEvents: "none" }}>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="w-80 h-64 mb-4 glass border border-slate-700/50 shadow-2xl rounded-lg overflow-hidden flex flex-col pointer-events-auto"
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            style={{
+              width: "320px",
+              height: "260px",
+              marginBottom: "12px",
+              background: "#111111",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "12px",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              pointerEvents: "auto",
+              boxShadow: "0 24px 48px rgba(0,0,0,0.6)",
+            }}
           >
-            <div className="bg-slate-800/80 px-3 py-2 flex justify-between items-center border-b border-white/5">
-              <div className="flex items-center gap-2">
-                <Activity size={14} className="text-cyan-400 animate-pulse" />
-                <span className="text-xs text-slate-300 font-mono font-bold tracking-wider">LIVE SERVER LOGS</span>
+            <div style={{
+              background: "#1A1A1A",
+              padding: "10px 14px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <Activity size={12} style={{ color: "#E8FF47" }} />
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#8A8A8A", letterSpacing: "0.1em" }}>LIVE SERVER LOGS</span>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-white transition-colors">
-                <Minimize2 size={14} />
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{ color: "#555", background: "none", border: "none", cursor: "pointer", display: "flex" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#F2F2F2")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#555")}
+              >
+                <Minimize2 size={13} />
               </button>
             </div>
-            
-            <div className="flex-1 p-3 bg-slate-900/90 overflow-y-auto font-mono text-[10px] sm:text-xs">
+
+            <div style={{ flex: 1, padding: "12px", background: "#080808", overflowY: "auto", fontFamily: "var(--font-mono)", fontSize: "11px" }}>
               {logs.map(log => (
-                <div key={log.id} className="mb-2 leading-relaxed">
-                  <span className="text-slate-500">[{log.time}]</span>{" "}
-                  <span className={getColor(log.level)}>[{log.level}]</span>{" "}
-                  <span className="text-slate-300">{log.message}</span>
+                <div key={log.id} style={{ marginBottom: "8px", lineHeight: 1.5 }}>
+                  <span style={{ color: "#555" }}>[{log.time}]</span>{" "}
+                  <span style={{ color: getColor(log.level) }}>[{log.level}]</span>{" "}
+                  <span style={{ color: "#8A8A8A" }}>{log.message}</span>
                 </div>
               ))}
-              <div ref={bottomRef} className="h-1" />
+              <div ref={bottomRef} style={{ height: "4px" }} />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <motion.button 
+      <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className={`pointer-events-auto p-3 rounded-full flex items-center justify-center shadow-2xl transition-all border ${isOpen ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-cyan-500 text-slate-900 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)] animate-bounce'}`}
+        style={{
+          pointerEvents: "auto",
+          width: "44px",
+          height: "44px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: isOpen ? "#1A1A1A" : "#E8FF47",
+          color: isOpen ? "#8A8A8A" : "#000",
+          border: isOpen ? "1px solid rgba(255,255,255,0.1)" : "none",
+          cursor: "pointer",
+          boxShadow: isOpen ? "none" : "0 0 20px rgba(232,255,71,0.3)",
+        }}
       >
-        {isOpen ? <X size={20} /> : <TerminalSquare size={20} />}
+        {isOpen ? <X size={18} /> : <TerminalSquare size={18} />}
       </motion.button>
     </div>
   );

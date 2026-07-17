@@ -1,30 +1,365 @@
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN TOKENS — ikendy.dev
+   Theme: Editorial Dark Tech
+   ============================================================ */
+
 :root {
-  --background: #0f172a; /* Lighter deep dark blue for modern cyber aesthetic */
-  --foreground: #f8fafc;
+  /* Background scale */
+  --bg-base:       #080808;
+  --bg-surface:    #111111;
+  --bg-elevated:   #1A1A1A;
+  --bg-hover:      #222222;
+
+  /* Foreground scale */
+  --fg-primary:    #F2F2F2;
+  --fg-secondary:  #8A8A8A;
+  --fg-muted:      #555555;
+
+  /* Accent — Yellow Electric */
+  --accent:        #E8FF47;
+  --accent-dim:    rgba(232, 255, 71, 0.12);
+  --accent-glow:   rgba(232, 255, 71, 0.25);
+  --accent-alt:    #FF4747;
+
+  /* Borders */
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-accent: rgba(232, 255, 71, 0.35);
+
+  /* Typography */
+  --font-sans:  var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  --font-body:  var(--font-body, 'Inter', system-ui, sans-serif);
+  --font-mono:  var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+
+  /* Radius */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+
+  /* Spacing */
+  --space-section: 120px;
+  --space-card:    32px;
+
+  /* Transitions */
+  --ease:       cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fast:  cubic-bezier(0.4, 0, 0.2, 1);
+  --duration:   200ms;
+  --duration-slow: 500ms;
+
+  /* Legacy compat */
+  --background: var(--bg-base);
+  --foreground: var(--fg-primary);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-base);
+  --color-foreground: var(--fg-primary);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--bg-base);
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-@layer utilities {
-  .glass {
-    @apply bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 shadow-xl;
-  }
-  
-  .glass-hover {
-    @apply hover:bg-slate-700/50 transition duration-300 ease-in-out hover:border-cyan-500/30;
-  }
+::selection {
+  background: var(--accent);
+  color: #000;
 }
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--fg-primary);
+}
+
+code, kbd, pre, samp {
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+
+@layer utilities {
+
+  /* Container padrão */
+  .page-container {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+
+  /* Fontes */
+  .font-display { font-family: var(--font-sans); }
+  .font-body    { font-family: var(--font-body); }
+  .font-mono    { font-family: var(--font-mono); }
+
+  /* Accent text */
+  .text-accent { color: var(--accent); }
+  .text-muted  { color: var(--fg-secondary); }
+
+  /* ── Section label — ex: "// 01. Stack" ─────────────────── */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  /* ── Card base ───────────────────────────────────────────── */
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-card);
+    transition: border-color var(--duration) var(--ease-fast),
+                background var(--duration) var(--ease-fast);
+  }
+
+  .card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated);
+  }
+
+  .card-accent:hover {
+    border-color: var(--border-accent);
+  }
+
+  /* ── Divider ─────────────────────────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin-block: 0;
+  }
+
+  /* ── Badge/Tag técnica ───────────────────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-secondary);
+    transition: border-color var(--duration) var(--ease-fast),
+                color var(--duration) var(--ease-fast);
+    cursor: default;
+  }
+
+  .badge:hover {
+    border-color: var(--border-strong);
+    color: var(--fg-primary);
+  }
+
+  /* ── Botão primário (accent amarelo) ─────────────────────── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--accent);
+    color: #000;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: opacity var(--duration) var(--ease-fast),
+                transform var(--duration) var(--ease-fast);
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  /* ── Botão secundário (outline) ──────────────────────────── */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--fg-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-strong);
+    cursor: pointer;
+    transition: border-color var(--duration) var(--ease-fast),
+                background var(--duration) var(--ease-fast),
+                transform var(--duration) var(--ease-fast);
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated);
+    transform: translateY(-1px);
+  }
+
+  /* ── Navbar ──────────────────────────────────────────────── */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(8, 8, 8, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Terminal / Code block ───────────────────────────────── */
+  .terminal-window {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elevated);
+  }
+
+  .terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* ── Dot de status ───────────────────────────────────────── */
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-dim);
+    animation: pulse-accent 2s infinite;
+  }
+
+  /* ── Linha horizontal espessa — divisor de seção ─────────── */
+  .section-rule {
+    height: 1px;
+    background: var(--border);
+    border: none;
+    margin: 0;
+  }
+
+  /* ── Glassmorphism REMOVIDO — substituído por .card ─────── */
+  /* mantendo .glass por compatibilidade com componentes internos */
+  .glass {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+  }
+
+  .glass-hover {
+    transition: border-color var(--duration) var(--ease-fast),
+                background var(--duration) var(--ease-fast);
+  }
+
+  .glass-hover:hover {
+    background: var(--bg-elevated);
+    border-color: var(--border-strong);
+  }
+
+  /* ── Timeline ────────────────────────────────────────────── */
+  .timeline-line {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  /* ── Noise texture overlay (sutil) ──────────────────────── */
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+@keyframes pulse-accent {
+  0%, 100% { box-shadow: 0 0 0 0px var(--accent-glow); }
+  50%       { box-shadow: 0 0 0 5px transparent; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* cursor piscante para terminal */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* scrollbar customizada */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }

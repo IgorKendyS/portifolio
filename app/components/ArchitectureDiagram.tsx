@@ -45,8 +45,8 @@ export function ArchitectureDiagram() {
     const y2 = (n2.y / 100) * 500;
 
     const isHovered = activeNode?.id === n1.id || activeNode?.id === n2.id;
-    const strokeColor = isHovered ? "rgba(34, 211, 238, 0.8)" : "rgba(255, 255, 255, 0.1)";
-    const strokeWidth = isHovered ? "3" : "2";
+    const strokeColor = isHovered ? "rgba(232,255,71,0.6)" : "rgba(255,255,255,0.08)";
+    const strokeWidth = isHovered ? "2" : "1";
 
     // Cubic bezier logic for smooth horizontal S-curves
     return (
@@ -62,32 +62,30 @@ export function ArchitectureDiagram() {
   };
 
   return (
-    <div className="w-full glass rounded-xl p-6 md:p-8 border border-slate-700/50 shadow-2xl overflow-hidden group">
-      {/* Background glow animated */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-white/5 mb-6 gap-4 relative z-20">
-        <div>
-          <h2 className="text-3xl font-bold text-white flex items-center gap-3">
-            <span className="text-cyan-400 font-mono text-xl">05.</span> 
-            <span className="flex items-center gap-2">
-               <Component className="text-cyan-400" size={24} /> 
-               Topologia de Microsserviços
-            </span>
-          </h2>
-          <p className="text-slate-400 text-sm mt-1">
-            Arquitetura interativa escalável baseada em containers. Clique nos nós para detalhar.
-          </p>
-        </div>
+    <div style={{
+      width: "100%",
+      background: "#111111",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: "12px",
+      padding: "32px",
+      overflow: "hidden",
+    }}>
+      <div style={{ paddingBottom: "24px", borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "32px" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "18px", letterSpacing: "-0.02em", display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+          <Component size={18} style={{ color: "#E8FF47" }} />
+          Topologia de Microsserviços
+        </h2>
+        <p style={{ color: "#8A8A8A", fontSize: "13px" }}>
+          Arquitetura interativa escalável em containers. Clique nos nós para detalhar.
+        </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        
+      <div style={{ display: "flex", flexDirection: "column", gap: "24px" }} className="arch-layout">
+
         {/* DIAGRAM AREA */}
-        <div className="relative w-full lg:w-2/3 bg-slate-900/40 rounded-xl border border-white/5 overflow-x-auto overflow-y-hidden custom-scrollbar">
-          {/* We define a box that behaves well responsibly, 1000x500 ratio */}
-          <div className="min-w-[600px] w-full aspect-[2/1] relative">
-            <svg viewBox="0 0 1000 500" className="absolute inset-0 w-full h-full pointer-events-none">
+        <div style={{ position: "relative", width: "100%", background: "#080808", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}>
+          <div style={{ minWidth: "600px", width: "100%", aspectRatio: "2/1", position: "relative" }}>
+            <svg viewBox="0 0 1000 500" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
               {edges.map(e => {
                 const n1 = nodes.find(n => n.id === e.from)!;
                 const n2 = nodes.find(n => n.id === e.to)!;
@@ -101,17 +99,37 @@ export function ArchitectureDiagram() {
                 <div
                   key={node.id}
                   onClick={() => setActiveNode(node)}
-                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-300 w-[110px] sm:w-[130px] h-20 rounded-lg flex flex-col items-center justify-center gap-1 border-2 shadow-lg hover:scale-105 z-10 
-                    ${isActive ? node.color + " bg-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.2)] ring-2 ring-cyan-400/30" : "bg-slate-900 text-slate-400 border-slate-700 hover:border-slate-500 hover:text-slate-300"}`}
-                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                  style={{
+                    position: "absolute",
+                    transform: "translate(-50%, -50%)",
+                    left: `${node.x}%`,
+                    top: `${node.y}%`,
+                    cursor: "pointer",
+                    width: "120px",
+                    height: "76px",
+                    borderRadius: "8px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "4px",
+                    background: isActive ? "#1A1A1A" : "#111111",
+                    border: isActive ? "1px solid #E8FF47" : "1px solid rgba(255,255,255,0.1)",
+                    boxShadow: isActive ? "0 0 16px rgba(232,255,71,0.2)" : "none",
+                    transition: "all 200ms ease",
+                    zIndex: 10,
+                  }}
+                  onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; } }}
+                  onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; } }}
                 >
-                  <div className={isActive ? "" : "opacity-70"}>{node.icon}</div>
-                  <span className="text-[10px] sm:text-xs font-bold text-center px-1 leading-tight">{node.label}</span>
+                  <div style={{ color: isActive ? "#E8FF47" : "#555", transition: "color 200ms ease" }}>
+                    {node.icon}
+                  </div>
+                  <span style={{ fontSize: "11px", fontWeight: 700, textAlign: "center", padding: "0 4px", lineHeight: 1.3, color: isActive ? "#F2F2F2" : "#8A8A8A" }}>
+                    {node.label}
+                  </span>
                   {isActive && (
-                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
-                    </span>
+                    <span style={{ position: "absolute", top: "-4px", right: "-4px", width: "8px", height: "8px", borderRadius: "50%", background: "#E8FF47", boxShadow: "0 0 6px #E8FF47" }} />
                   )}
                 </div>
               );
@@ -120,52 +138,67 @@ export function ArchitectureDiagram() {
         </div>
 
         {/* DETAILS PANEL */}
-        <div className="w-full lg:w-1/3 bg-slate-900/60 rounded-xl border border-white/5 p-6 flex flex-col relative overflow-hidden h-[300px] lg:h-auto z-20">
-           <AnimatePresence mode="wait">
+        <div style={{
+          background: "#080808",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: "8px",
+          padding: "24px",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "180px",
+        }}>
+          <AnimatePresence mode="wait">
             {activeNode ? (
               <motion.div
                 key={activeNode.id}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
+                exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.2 }}
-                className="h-full flex flex-col"
+                style={{ display: "flex", flexDirection: "column", gap: "16px" }}
               >
-                 <div className="flex items-center gap-4 mb-4">
-                   <div className={`p-4 rounded-xl ${activeNode.iconBg}`}>
-                     {activeNode.icon}
-                   </div>
-                   <div>
-                     <h4 className="text-xl font-bold text-white leading-tight">{activeNode.label}</h4>
-                     <span className="text-xs text-slate-500 font-mono">ID: {activeNode.id}</span>
-                   </div>
-                 </div>
-                 
-                 <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                   {activeNode.desc}
-                 </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                  <div style={{ padding: "12px", background: "#1A1A1A", borderRadius: "8px", color: "#E8FF47", border: "1px solid rgba(255,255,255,0.08)" }}>
+                    {activeNode.icon}
+                  </div>
+                  <div>
+                    <h4 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "18px", letterSpacing: "-0.02em" }}>
+                      {activeNode.label}
+                    </h4>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#555" }}>ID: {activeNode.id}</span>
+                  </div>
+                </div>
 
-                 <div className="mt-auto">
-                   <h5 className="text-xs uppercase text-slate-500 font-bold mb-3 tracking-widest flex items-center gap-2">
-                     <span className="w-4 h-px bg-slate-600"></span> Stack Oficial
-                   </h5>
-                   <div className="flex flex-wrap gap-2">
-                     {activeNode.tech.map((t, idx) => (
-                       <span key={idx} className="bg-slate-800 text-cyan-300 border border-slate-700/50 px-3 py-1 text-[11px] rounded-md font-mono shadow-sm">
-                         {t}
-                       </span>
-                     ))}
-                   </div>
-                 </div>
+                <p style={{ color: "#8A8A8A", fontSize: "14px", lineHeight: 1.7 }}>{activeNode.desc}</p>
+
+                <div>
+                  <h5 style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#555", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "12px" }}>
+                    Stack Oficial
+                  </h5>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {activeNode.tech.map((t, idx) => (
+                      <span key={idx} className="badge">{t}</span>
+                    ))}
+                  </div>
+                </div>
               </motion.div>
             ) : (
-              <div className="h-full flex items-center justify-center text-slate-500 text-sm italic">
-                Selecione um nó ao lado.
+              <div style={{ color: "#555", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px", flex: 1 }}>
+                Selecione um nó acima.
               </div>
             )}
-           </AnimatePresence>
+          </AnimatePresence>
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 1024px) {
+          .arch-layout { flex-direction: row !important; }
+          .arch-layout > div:first-child { flex: 2; }
+          .arch-layout > div:last-child { flex: 1; }
+        }
+      `}</style>
     </div>
   );
 }
+

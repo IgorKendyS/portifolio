@@ -103,105 +103,195 @@ export function ApiPlayground() {
   };
 
   return (
-    <div className="w-full glass rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl flex flex-col group">
+    <div style={{
+      width: "100%",
+      background: "#111111",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: "12px",
+      overflow: "hidden",
+    }}>
       {/* HEADER */}
-      <div className="bg-slate-900/80 px-4 md:px-6 py-4 border-b border-white/5 flex items-center gap-3">
-        <Code className="text-cyan-400" size={24} />
+      <div style={{
+        background: "#1A1A1A",
+        padding: "16px 24px",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+      }}>
+        <Code size={18} style={{ color: "#E8FF47" }} />
         <div>
-           <h3 className="text-lg font-bold text-white leading-tight">Postman / Swagger Sim</h3>
-           <span className="text-xs text-slate-500 font-mono">Rest API Playground</span>
+          <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "16px", letterSpacing: "-0.02em" }}>Postman / Swagger Sim</h3>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#555" }}>Rest API Playground</span>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-white/5 h-auto lg:h-[450px]">
+      <div style={{ display: "flex", flexDirection: "column" }} className="api-layout">
         {/* REQUEST PANEL */}
-        <div className="w-full lg:w-1/2 p-4 md:p-6 flex flex-col gap-4 bg-slate-900/40">
-           <div className="flex flex-wrap gap-2 mb-2">
-             <span className="text-xs text-slate-500 font-bold uppercase tracking-wider w-full">Fast Select</span>
-             {predefinedEndpoints.map((ep, i) => (
-               <button 
-                 key={i} 
-                 onClick={() => { setMethod(ep.method); setPath(ep.path); }}
-                 className="text-[10px] sm:text-xs font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700"
-               >
-                 <span className={ep.method === 'GET' ? 'text-emerald-400' : ep.method === 'POST' ? 'text-blue-400' : 'text-rose-400'}>{ep.method}</span> {ep.path}
-               </button>
-             ))}
-           </div>
+        <div style={{ padding: "20px 24px", display: "flex", flexDirection: "column", gap: "16px", background: "#080808", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#555", letterSpacing: "0.1em", textTransform: "uppercase", width: "100%" }}>Fast Select</span>
+            {predefinedEndpoints.map((ep, i) => (
+              <button
+                key={i}
+                onClick={() => { setMethod(ep.method); setPath(ep.path); }}
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "11px",
+                  padding: "4px 10px",
+                  borderRadius: "4px",
+                  background: "#1A1A1A",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  color: "#8A8A8A",
+                  cursor: "pointer",
+                  transition: "background 150ms ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#222")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "#1A1A1A")}
+              >
+                <span style={{ color: ep.method === 'GET' ? '#4ADE80' : ep.method === 'POST' ? '#7B9FFF' : '#FF4747' }}>{ep.method}</span> {ep.path}
+              </button>
+            ))}
+          </div>
 
-           <div className="flex h-10 shadow-lg">
-             <select 
-               value={method} 
-               onChange={(e) => setMethod(e.target.value as any)}
-               className={`h-full px-2 sm:px-3 rounded-l-lg outline-none font-bold text-xs sm:text-sm tracking-wide border-y border-l cursor-pointer appearance-none ${getMethodColor(method)}`}
-             >
-               <option value="GET">GET</option>
-               <option value="POST">POST</option>
-               <option value="DELETE">DELETE</option>
-             </select>
-             <input 
-               type="text" 
-               value={path}
-               onChange={(e) => setPath(e.target.value)}
-               className="h-full flex-1 w-[50px] bg-slate-900 border border-slate-700 text-slate-300 font-mono text-[10px] sm:text-sm px-2 sm:px-4 outline-none focus:border-cyan-500 transition-colors"
-               placeholder="https://api..."
-               spellCheck="false"
-             />
-             <button 
-               onClick={handleSend}
-               disabled={isLoading}
-               className="h-full px-3 sm:px-6 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-r-lg border-y border-r border-cyan-600 flex items-center gap-1 sm:gap-2 transition-all disabled:opacity-50 text-xs sm:text-sm shadow-[0_0_15px_rgba(8,145,178,0.5)]"
-             >
-               {isLoading ? "Wait..." : "Send"}
-               {!isLoading && <Send size={14} />}
-             </button>
-           </div>
+          <div style={{ display: "flex", height: "40px" }}>
+            <select
+              value={method}
+              onChange={(e) => setMethod(e.target.value as 'GET' | 'POST' | 'DELETE')}
+              style={{
+                height: "100%",
+                padding: "0 12px",
+                borderRadius: "6px 0 0 6px",
+                background: "#1A1A1A",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRight: "none",
+                color: method === 'GET' ? '#4ADE80' : method === 'POST' ? '#7B9FFF' : '#FF4747',
+                fontFamily: "var(--font-mono)",
+                fontWeight: 700,
+                fontSize: "13px",
+                cursor: "pointer",
+                outline: "none",
+              }}
+            >
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <input
+              type="text"
+              value={path}
+              onChange={(e) => setPath(e.target.value)}
+              style={{
+                flex: 1,
+                height: "100%",
+                background: "#0A0A0A",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRight: "none",
+                color: "#F2F2F2",
+                fontFamily: "var(--font-mono)",
+                fontSize: "13px",
+                padding: "0 12px",
+                outline: "none",
+              }}
+              placeholder="/api/v1/..."
+              spellCheck={false}
+            />
+            <button
+              onClick={handleSend}
+              disabled={isLoading}
+              style={{
+                padding: "0 20px",
+                background: isLoading ? "#333" : "#E8FF47",
+                color: isLoading ? "#555" : "#000",
+                border: "none",
+                borderRadius: "0 6px 6px 0",
+                fontFamily: "var(--font-sans)",
+                fontWeight: 700,
+                fontSize: "13px",
+                cursor: isLoading ? "not-allowed" : "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                transition: "all 150ms ease",
+                flexShrink: 0,
+              }}
+            >
+              {isLoading ? "Wait..." : "Send"}
+              {!isLoading && <Send size={13} />}
+            </button>
+          </div>
 
-           {/* BODY TEXTAREA */}
-           <div className="flex-1 flex flex-col mt-2 min-h-[150px] lg:min-h-0">
-             <span className="text-xs text-slate-500 font-bold mb-2">JSON BODY {method === "GET" && "(Ignorado)"}</span>
-             <textarea 
-               value={body}
-               onChange={(e) => setBody(e.target.value)}
-               disabled={method === "GET" || method === "DELETE"}
-               className="flex-1 w-full bg-slate-950 border border-slate-800 rounded-lg p-3 font-mono text-xs text-indigo-300 resize-none outline-none focus:border-slate-600 disabled:opacity-50 transition-colors custom-scrollbar"
-               spellCheck="false"
-             />
-           </div>
+          {/* BODY */}
+          <div style={{ display: "flex", flexDirection: "column", minHeight: "120px" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#555", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "8px" }}>
+              JSON BODY {(method === "GET" || method === "DELETE") && "(Ignorado)"}
+            </span>
+            <textarea
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              disabled={method === "GET" || method === "DELETE"}
+              style={{
+                flex: 1,
+                width: "100%",
+                background: "#0A0A0A",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: "6px",
+                padding: "12px",
+                fontFamily: "var(--font-mono)",
+                fontSize: "12px",
+                color: "#7B9FFF",
+                resize: "vertical",
+                outline: "none",
+                minHeight: "100px",
+                opacity: (method === "GET" || method === "DELETE") ? 0.4 : 1,
+              }}
+              spellCheck={false}
+            />
+          </div>
         </div>
 
         {/* RESPONSE PANEL */}
-        <div className="w-full lg:w-1/2 p-4 md:p-6 flex flex-col bg-slate-950 min-h-[250px] lg:min-h-0">
-           <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
-             <span className="text-xs text-slate-500 font-bold">RESPONSE</span>
-             {status && (
-               <div className="flex items-center gap-2 sm:gap-4 text-xs font-mono">
-                 <span className={`font-bold flex items-center gap-1 ${getStatusColor(status)}`}>
-                   {status >= 200 && status < 300 ? <CheckCircle size={14} /> : <XCircle size={14} />}
-                   {status} {status === 200 ? "OK" : status === 404 ? "Not Found" : status === 403 ? "Forbidden" : "Bad Request"}
-                 </span>
-                 <span className="text-slate-400 flex items-center gap-1"><Clock size={12} /> {latency}ms</span>
-               </div>
-             )}
-           </div>
+        <div style={{ padding: "20px 24px", display: "flex", flexDirection: "column", background: "#080808", minHeight: "220px" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", paddingBottom: "12px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#555", letterSpacing: "0.1em", textTransform: "uppercase" }}>Response</span>
+            {status && (
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontFamily: "var(--font-mono)", fontSize: "12px" }}>
+                <span style={{ fontWeight: 700, color: status >= 200 && status < 300 ? '#4ADE80' : status >= 400 && status < 500 ? '#E8FF47' : '#FF4747', display: "flex", alignItems: "center", gap: "4px" }}>
+                  {status >= 200 && status < 300 ? <CheckCircle size={13} /> : <XCircle size={13} />}
+                  {status} {status === 200 ? "OK" : status === 404 ? "Not Found" : status === 403 ? "Forbidden" : "Bad Request"}
+                </span>
+                <span style={{ color: "#555", display: "flex", alignItems: "center", gap: "4px" }}><Clock size={12} /> {latency}ms</span>
+              </div>
+            )}
+          </div>
 
-           <div className="flex-1 rounded-lg border border-slate-800 bg-[#0c1015] overflow-auto custom-scrollbar relative">
-             {isLoading ? (
-               <div className="absolute inset-0 flex items-center justify-center">
-                 <div className="w-6 h-6 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
-               </div>
-             ) : response ? (
-               <pre className="p-4 text-[11px] sm:text-xs font-mono text-emerald-300">
-                 {JSON.stringify(response, null, 2)}
-               </pre>
-             ) : (
-               <div className="absolute inset-0 flex items-center justify-center text-slate-600 text-[10px] sm:text-sm italic font-mono px-4 text-center">
-                 Clique em 'Send' para disparar uma requisição mockada
-               </div>
-             )}
-           </div>
+          <div style={{ flex: 1, borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)", background: "#060606", overflow: "auto", position: "relative", minHeight: "140px" }}>
+            {isLoading ? (
+              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ width: "24px", height: "24px", borderRadius: "50%", border: "2px solid #E8FF47", borderTopColor: "transparent", animation: "spin 0.7s linear infinite" }} />
+              </div>
+            ) : response ? (
+              <pre style={{ padding: "16px", fontFamily: "var(--font-mono)", fontSize: "12px", color: "#4ADE80", lineHeight: 1.6 }}>
+                {JSON.stringify(response, null, 2)}
+              </pre>
+            ) : (
+              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#333", fontFamily: "var(--font-mono)", fontSize: "13px", textAlign: "center", padding: "16px" }}>
+                Clique em 'Send' para disparar uma requisição mockada
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @media (min-width: 1024px) {
+          .api-layout { flex-direction: row !important; }
+          .api-layout > div { flex: 1; border-bottom: none !important; border-right: 1px solid rgba(255,255,255,0.06) !important; }
+          .api-layout > div:last-child { border-right: none !important; }
+        }
+      `}</style>
     </div>
   );
 }
+

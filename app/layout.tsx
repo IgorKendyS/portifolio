@@ -1,20 +1,46 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Igor Kendy | Full-Stack & DevOps",
-  description: "Portfólio de Igor Kendy Sakaguchi - Desenvolvedor Full-Stack com foco em Cloud e Integrações.",
+  title: "Igor Kendy | Full-Stack & DevOps Engineer",
+  description:
+    "Portfólio de Igor Kendy Sakaguchi — Desenvolvedor Full-Stack especializado em Backend, DevOps e Cloud. APIs escaláveis, automações e infraestrutura Kubernetes.",
+  keywords: [
+    "Igor Kendy",
+    "Full-Stack Developer",
+    "DevOps",
+    "Backend",
+    "Node.js",
+    "Kubernetes",
+    "Cloud",
+    "Python",
+  ],
+  authors: [{ name: "Igor Kendy Sakaguchi" }],
+  openGraph: {
+    title: "Igor Kendy | Full-Stack & DevOps Engineer",
+    description:
+      "Desenvolvedor Full-Stack focado em Backend, DevOps e Cloud. Infraestruturas resilientes do servidor ao navegador.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -23,11 +49,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-900 text-slate-100 selection:bg-cyan-500/30 font-sans`}
-      >
-        <div className="fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900 to-slate-900"></div>
+    <html
+      lang="pt-BR"
+      className={`scroll-smooth ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="antialiased" style={{ backgroundColor: "#080808", color: "#F2F2F2" }}>
         {children}
       </body>
     </html>

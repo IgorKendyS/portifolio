@@ -204,61 +204,103 @@ while True:
   };
 
   return (
-    <div className="w-full rounded-xl overflow-hidden glass border-slate-700/50 shadow-2xl flex flex-col font-mono text-sm group transition-all duration-500 hover:shadow-cyan-500/10 hover:border-cyan-500/20">
+    <div
+      style={{
+        width: "100%",
+        borderRadius: "12px",
+        overflow: "hidden",
+        border: "1px solid rgba(255,255,255,0.08)",
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: "var(--font-mono)",
+        fontSize: "13px",
+        background: "#111111",
+        transition: "border-color 200ms ease",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+    >
       {/* Terminal Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-slate-800/80 border-b border-white/5">
-        <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500/80 shadow-[0_0_5px_rgba(239,68,68,0.5)]"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500/80 shadow-[0_0_5px_rgba(234,179,8,0.5)]"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500/80 shadow-[0_0_5px_rgba(34,197,94,0.5)]"></div>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "12px 16px",
+        background: "#1A1A1A",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+      }}>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FF5F57" }} />
+          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FFBD2E" }} />
+          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#28CA41" }} />
         </div>
-        <div className="flex items-center gap-2 text-slate-400 text-xs font-sans">
-          <TerminalIcon size={14} />
-          <span>guest@ikendy-portfolio:~</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#555" }}>
+          <TerminalIcon size={12} />
+          <span style={{ fontSize: "11px", letterSpacing: "0.04em" }}>guest@ikendy-portfolio:~</span>
         </div>
-        <div className="flex gap-2 text-slate-500 hidden sm:flex">
-          <Minus size={14} className="hover:text-white cursor-pointer transition-colors" />
-          <Maximize2 size={14} className="hover:text-white cursor-pointer transition-colors" />
-          <X size={14} className="hover:text-white cursor-pointer transition-colors" />
+        <div style={{ display: "flex", gap: "10px", color: "#444" }}>
+          <Minus size={13} style={{ cursor: "pointer" }} />
+          <Maximize2 size={13} style={{ cursor: "pointer" }} />
+          <X size={13} style={{ cursor: "pointer" }} />
         </div>
       </div>
 
       {/* Terminal Body */}
-      <div 
-        className="p-4 sm:p-6 bg-slate-900/90 h-[350px] sm:h-[400px] overflow-y-auto"
+      <div
+        style={{
+          padding: "20px 24px",
+          background: "#080808",
+          height: "380px",
+          overflowY: "auto",
+          cursor: "text",
+        }}
         onClick={() => document.getElementById("terminal-input")?.focus()}
       >
-        <div className="text-cyan-400 mb-6 font-semibold">
-          Ikendy OS (v2.0.4) - Sistema Arquitetural de Apresentação.<br />
-          Digite <span className="text-white bg-white/10 px-1 rounded">help</span> para acessar os recursos da infraestrutura.
+        <div style={{ color: "#4ADE80", marginBottom: "20px", lineHeight: 1.7 }}>
+          Ikendy OS (v2.0.4) — Sistema Arquitetural de Apresentação.<br />
+          Digite{" "}
+          <span style={{ color: "#E8FF47", background: "rgba(232,255,71,0.08)", padding: "1px 6px", borderRadius: "3px" }}>help</span>
+          {" "}para acessar os recursos da infraestrutura.
         </div>
-        
+
         {history.map((item, i) => (
-          <div key={i} className="mb-4">
-            <div className="flex gap-2 text-slate-300">
-              <span className="text-emerald-400 shrink-0 select-none">guest@{item.cwdState} $</span>
-              <span className="text-white">{item.cmd}</span>
+          <div key={i} style={{ marginBottom: "16px" }}>
+            <div style={{ display: "flex", gap: "8px", color: "#F2F2F2" }}>
+              <span style={{ color: "#E8FF47", flexShrink: 0, userSelect: "none" }}>guest@{item.cwdState} $</span>
+              <span style={{ color: "#F2F2F2" }}>{item.cmd}</span>
             </div>
-            {item.output && <div className="mt-1 ml-0 sm:ml-4">{item.output}</div>}
+            {item.output && (
+              <div style={{ marginTop: "6px", marginLeft: "4px" }}>{item.output}</div>
+            )}
           </div>
         ))}
 
-        <div className="flex gap-2 text-slate-300 items-center mt-2">
-          <span className="text-emerald-400 shrink-0 select-none">guest@{cwd} $</span>
-          <input 
+        <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "8px" }}>
+          <span style={{ color: "#E8FF47", flexShrink: 0, userSelect: "none" }}>guest@{cwd} $</span>
+          <input
             id="terminal-input"
-            type="text" 
+            type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleCommand}
-            className="flex-1 bg-transparent outline-none border-none text-white w-full shadow-none focus:ring-0"
+            style={{
+              flex: 1,
+              background: "transparent",
+              border: "none",
+              outline: "none",
+              color: "#F2F2F2",
+              fontFamily: "var(--font-mono)",
+              fontSize: "13px",
+              caretColor: "#E8FF47",
+            }}
             autoFocus
-            spellCheck="false"
+            spellCheck={false}
             autoComplete="off"
           />
         </div>
-        <div ref={bottomRef} className="h-4" />
+        <div ref={bottomRef} style={{ height: "16px" }} />
       </div>
     </div>
   );
 }
+
