@@ -13,10 +13,12 @@ export function InteractiveTerminal() {
   const [history, setHistory] = useState<CommandHistory[]>([]);
   const [input, setInput] = useState("");
   const [cwd, setCwd] = useState("~");
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -189,7 +191,7 @@ while True:
           output = (
             <div className="text-slate-300 mt-2">
               E-mail: <a href="mailto:igkendy.s@gmail.com" className="text-cyan-400 hover:underline">igkendy.s@gmail.com</a><br/>
-              LinkedIn: <a href="https://linkedin.com/in/IgorKendyS" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline">/IgorKendyS</a>
+              LinkedIn: <a href="https://www.linkedin.com/in/igorsakaguchi/" target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline">/in/igorsakaguchi</a>
             </div>
           );
           break;
@@ -247,6 +249,7 @@ while True:
 
       {/* Terminal Body */}
       <div
+        ref={containerRef}
         style={{
           padding: "20px 24px",
           background: "#080808",
@@ -298,7 +301,6 @@ while True:
             autoComplete="off"
           />
         </div>
-        <div ref={bottomRef} style={{ height: "16px" }} />
       </div>
     </div>
   );

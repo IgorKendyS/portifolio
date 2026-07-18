@@ -12,6 +12,7 @@ import {
   Briefcase,
   GraduationCap,
   ExternalLink,
+  MessageCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -263,7 +264,7 @@ export default function Home() {
                 <Github size={16} /> GitHub
               </a>
               <a
-                href="https://linkedin.com/in/IgorKendyS"
+                href="https://www.linkedin.com/in/igorsakaguchi/"
                 target="_blank"
                 rel="noreferrer"
                 className="btn-secondary"
@@ -988,7 +989,17 @@ export default function Home() {
               igkendy.s@gmail.com
             </a>
             <a
-              href="https://linkedin.com/in/IgorKendyS"
+              href="https://wa.me/5518997907790"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-secondary"
+              style={{ fontSize: "15px", padding: "14px 28px" }}
+            >
+              <MessageCircle size={18} />
+              WhatsApp
+            </a>
+            <a
+              href="https://www.linkedin.com/in/igorsakaguchi/"
               target="_blank"
               rel="noreferrer"
               className="btn-secondary"
