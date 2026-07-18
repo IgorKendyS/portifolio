@@ -121,7 +121,7 @@ export default function Home() {
 
           {/* CTA */}
           <a
-            href="/IgorKendySakaguchi12-2025.pdf"
+            href="/curriculo"
             target="_blank"
             rel="noreferrer"
             className="btn-secondary"
