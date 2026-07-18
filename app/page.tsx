@@ -699,7 +699,7 @@ export default function Home() {
               {
                 period: "Nov 2024 — Atual",
                 role: "Desenvolvedor",
-                company: "Responza",
+                company: "AI CORE STACK",
                 description:
                   "Configuração e manutenção de servidores Kubernetes e arquiteturas baseadas em Serverless Functions. Scale do produto e governança na nuvem.",
                 tags: ["Kubernetes", "Serverless", "Google Cloud"],

@@ -79,13 +79,12 @@ export function ResumeContent() {
 
       {/* Controles Flutuantes */}
       <div className="fixed top-6 right-6 flex items-center gap-3 print:hidden z-50">
-        
+
         {/* Language Toggle */}
         <button
           onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-colors font-medium text-sm ${
-            isDark ? "bg-[#1A1A1A] text-white hover:bg-[#222]" : "bg-white text-gray-900 hover:bg-gray-100"
-          }`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-colors font-medium text-sm ${isDark ? "bg-[#1A1A1A] text-white hover:bg-[#222]" : "bg-white text-gray-900 hover:bg-gray-100"
+            }`}
           title={t.switchLang}
         >
           <Languages size={16} />
@@ -95,9 +94,8 @@ export function ResumeContent() {
         {/* Theme Toggle */}
         <button
           onClick={() => setIsDark(!isDark)}
-          className={`flex items-center justify-center w-10 h-10 rounded-full shadow-lg transition-colors ${
-            isDark ? "bg-[#1A1A1A] text-white hover:bg-[#222]" : "bg-white text-gray-900 hover:bg-gray-100"
-          }`}
+          className={`flex items-center justify-center w-10 h-10 rounded-full shadow-lg transition-colors ${isDark ? "bg-[#1A1A1A] text-white hover:bg-[#222]" : "bg-white text-gray-900 hover:bg-gray-100"
+            }`}
           title={t.switchTheme}
         >
           {isDark ? <Sun size={18} /> : <Moon size={18} />}
@@ -176,7 +174,7 @@ export function ResumeContent() {
               <h3 className={`font-bold text-base ${isDark ? "!text-white" : "!text-gray-900"} print:!text-black`}>{t.devRole}</h3>
               <span className={`text-sm font-medium ${isDark ? "text-[#E8FF47]" : "text-gray-500"} print:text-gray-600`}>Nov 2024 — {t.present}</span>
             </div>
-            <div className={`text-sm mb-2 font-medium ${isDark ? "text-gray-400" : "text-gray-600"} print:text-gray-800`}>Responza</div>
+            <div className={`text-sm mb-2 font-medium ${isDark ? "text-gray-400" : "text-gray-600"} print:text-gray-800`}>AI CORE STACK</div>
             <ul className={`list-disc list-outside ml-4 text-sm space-y-1.5 ${isDark ? "text-gray-300" : "text-gray-700"} print:text-gray-800`}>
               {t.exp1Items.map((item, i) => <li key={i}>{item}</li>)}
             </ul>
