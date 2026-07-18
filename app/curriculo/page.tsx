@@ -1,6 +1,7 @@
 import React from "react";
-import { Mail, Phone, Linkedin, Github, MapPin, Globe, Download } from "lucide-react";
+import { Mail, Phone, Linkedin, Github, MapPin, Globe } from "lucide-react";
 import { Metadata } from "next";
+import { PrintButton } from "./PrintButton";
 
 export const metadata: Metadata = {
   title: "Currículo | Igor Kendy Sakaguchi",
@@ -10,19 +11,7 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-gray-200">
-      {/* 
-        Botão Flutuante para Download/Impressão 
-        Oculto na hora da impressão (@media print no globals.css ou via Tailwind print:hidden) 
-      */}
-      <div className="fixed top-6 right-6 print:hidden z-50">
-        <button
-          onClick={() => window.print()}
-          className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full shadow-lg hover:bg-gray-800 transition-colors font-medium text-sm"
-        >
-          <Download size={16} />
-          Salvar como PDF
-        </button>
-      </div>
+      <PrintButton />
 
       <div className="max-w-[800px] mx-auto p-8 sm:p-12 md:p-16 bg-white shadow-sm print:shadow-none print:p-0">
         {/* HEADER */}
