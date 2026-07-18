@@ -146,7 +146,8 @@ export function LiveChat() {
   const connect = useCallback((userInfo: UserInfo) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
 
-    const wsUrl = `ws://${window.location.host}/ws/chat`;
+    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    const wsUrl = `${protocol}//${window.location.host}/ws/chat`;
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
     setWsStatus("connecting");
